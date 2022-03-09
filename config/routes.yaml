@@ -1,3 +1,11 @@
 #index:
 #    path: /
 #    controller: App\Controller\DefaultController::index
+
+new_invoice:
+    path: /invoice/new
+    controller: App\Controller\InvoiceController::new
+
+list_invoice:
+    path: /invoice/list
+    controller: App\Controller\InvoiceController::list
