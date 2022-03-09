@@ -1,0 +1,19 @@
+<table>
+<tr><th>Id</th><th>Customer</th><th>number</th><th>date</th><th>lines</th></tr>
+{% for inv in Invoice %}
+
+<tr><td>{{ inv.Id }}</td> <td>{{ inv.CustomerId }}</td> <td>{{ inv.InvoiceNumber }}</td><td>{{ inv.InvoiceDate|date('Y-m-d') }}</td> 
+			<td><ul>{% for line in inv.InvoiceLines %}
+			<li> {{ line.Description }} - {{ line.Quantity }} - {{ line.Amount }}</li>
+			{% endfor %}</ul></td>
+ </tr>
+{% endfor %}
+</table>
+
+<style>
+
+tr,td,th,table{
+	border: 1px solid;
+	border-collapse: collapse;
+}
+</style>

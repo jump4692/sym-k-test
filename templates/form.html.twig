@@ -1,0 +1,47 @@
+
+{{ form_start(form) }}
+{{ form_row(form.save) }}
+    {{ form_row(form.InvoiceDate) }}
+    {{ form_row(form.InvoiceNumber) }}
+    {{ form_row(form.CustomerId) }}
+
+    <h3>Lines</h3>
+    <button type="button" class="add_item_link" data-collection-holder-class="InvoiceLine">Add line</button>
+
+   <ul class="InvoiceLine"
+    data-index="{{ form.InvoiceLines|length > 0 ? form.InvoiceLines|last.vars.name + 1 : 0 }}"
+    data-prototype="{{ form_widget(form.InvoiceLines.vars.prototype)|e('html_attr') }}">
+        {% for line in form.InvoiceLines %}
+            <div>{{ form_row(line.Description) }}{{ form_row(line.Quantity) }}{{ form_row(line.Amount) }}{{ form_row(line.Vat) }}{{ form_row(line.TotalWVat) }}</div>
+        {% endfor %}
+    </ul>
+{{ form_end(form) }}
+
+<script>
+const addFormToCollection = (e) => {
+  const collectionHolder = document.querySelector('.' + e.currentTarget.dataset.collectionHolderClass);
+
+  const item = document.createElement('div');
+
+  item.innerHTML = collectionHolder
+    .dataset
+    .prototype
+    .replace(
+      /__name__/g,
+      collectionHolder.dataset.index
+    );
+
+  collectionHolder.appendChild(item);
+
+  collectionHolder.dataset.index++;
+};
+document.querySelectorAll('.add_item_link').forEach(btn => {
+      btn.addEventListener("click", addFormToCollection)
+  });
+  </script>
+  
+<style>
+div {
+	display:flex;
+}
+</style>
